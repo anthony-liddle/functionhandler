@@ -6,7 +6,3 @@ node_modules/
 
 # Sass Files
 .sass-cache/
-
-# Images/Video
-test/video/
-test/images/
