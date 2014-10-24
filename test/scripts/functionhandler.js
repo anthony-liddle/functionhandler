@@ -6,6 +6,9 @@
     function FunctionHandler() {
       var element = window.document;
 
+      element.addEventListener('DOMNodeRemoved', this.elementRemoved.bind(this), false);
+      element.addEventListener('DOMNodeInserted', this.elementAdded.bind(this), false);
+
       var functionElements = element.querySelectorAll('[data-function]');
 
       this.addEventHandlers(functionElements);
@@ -22,14 +25,27 @@
           return;
         }
 
-        if (el.addEventListener) {
-          el.addEventListener(interaction, window[funcName], false);
-        }
-        else {
-          el.attachEvent('on'+interaction, function() {
-            window[funcName].call(el);
-          });
-        }
+        el.addEventListener(interaction, window[funcName], false);
+      }
+    };
+
+    FunctionHandler.prototype.elementRemoved = function(event) {
+      var el = event.target;
+      if (!this.checkDataFunction(el)) { return; }
+      var funcName = el.getAttribute('data-function');
+      var interaction = (el.getAttribute('data-action')) ? el.getAttribute('data-action') : 'click';
+      el.removeEventListener(interaction, window[funcName], false);
+    };
+
+    FunctionHandler.prototype.elementAdded = function(event) {
+      var el = event.target;
+      if (!this.checkDataFunction(el)) { return; }
+      this.addEventHandlers([el]);
+    };
+
+    FunctionHandler.prototype.checkDataFunction = function(el) {
+      if (el.hasAttribute('data-function')) {
+        return true;
       }
     };
 

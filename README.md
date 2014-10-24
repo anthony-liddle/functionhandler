@@ -4,7 +4,7 @@ This is a simple Function Handler that will help novice users add event handlers
 
 This will also keep people from using dreaded inline onclick events.
 
-Simply add a `data-function="..."` to your HTML element, and create a javascript function with the same name. 
+Simply add a `data-function="..."` to your HTML element, and create a javascript function with the same name.
 
 You're good to go!
 
@@ -12,7 +12,7 @@ You're good to go!
 
 Include the minified source javascript:
 
-+ [functionhandler.min.css](dist/functionhandler.min.js)
++ [functionhandler.min.js](dist/functionhandler.min.js)
 
 ## Initialize
 
@@ -30,6 +30,8 @@ If you want to call your custom function with a different event, simply declare 
 <div data-function="myFunction" data-action="mouseover">Call on mouseover</div>
 ```
 
+The functionhandler will also watch for elements being removed and added. If a node is removed that had a `data-function` on it, the event listner will be removed. On the other side, if a element is added that has a data-function tied to it, it will then add the function.
+
 ## License
 
 FunctionHandler.js is released under the [MIT license](http://opensource.org/licenses/MIT).
@@ -37,3 +39,7 @@ FunctionHandler.js is released under the [MIT license](http://opensource.org/lic
 * * *
 
 Copyright :copyright: 2014 Anthony Law Liddle
+
+## ToDos
+
++ Check children of elements being added or removed so see if a function needs to be handled.
